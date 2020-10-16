@@ -13,8 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
         //My code section BEGIN
 
-        System.out.println("Hello WORLD!!!");
-hit
+        System.out.println("Hello WORLD!!!"); //Lesson_1
+
         //My code section END
     }
 }

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Step_1</string>
+    <string name="cost_tovar">Cost</string>
+    <string name="name_tovar">Name</string>
+    <string name="HELLO">Hello World!!!</string>
+    <string name="Button_name_post">Add_pos</string>
 </resources>

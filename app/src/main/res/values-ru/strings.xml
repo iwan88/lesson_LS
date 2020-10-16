@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Первый шаг</string>
+    <string name="cost_tovar">Цена</string>
+    <string name="name_tovar">Наименование</string>
+    <string name="HELLO">Привет МИР!!!</string>
+    <string name="Button_name_post">Добавить</string>
+</resources>
