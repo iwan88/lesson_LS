@@ -9,48 +9,52 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ItemViewHolder extends RecyclerView.ViewHolder {
-    private TextView name;
-    private TextView price;
+class itemViewAdaprer extends RecyclerView.Adapter<itemViewAdaprer.itemViewHolder>{
 
-    public ItemViewHolder(@NonNull View itemView) {
-        super(itemView);
-        name = itemView.findViewById(R.id.name);
-        price = itemView.findViewById(R.id.price);
-    }
-    public void bind(Item item){
-        name.setText(item.getName());
-        price.setText(item.getPrice());
-    }
+    private List<Item> moneyList = new ArrayList<>();
 
-    //???????????????????
-    private List<Item> items = Collections.emptyList();
+    public void SetData(List<Item> tmp_data){
+        moneyList.clear();
+        moneyList.addAll(tmp_data);
 
-    public void setItems(List<Item> items){
-        this.items = items;
         notifyDataSetChanged();
     }
+
+    @NonNull
     @Override
-    public int getItemCount(){
-        return items.size();
+    public itemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        return new itemViewHolder(layoutInflater.inflate(R.layout.activity_main,parent,false));
     }
 
-   @NonNull
     @Override
-    public ItemViewHolder onCreateViewHolder (@NonNull ViewGroup viewGroup, int position){
-       Context context = viewGroup.getContext();
-       LayoutInflater inflater = LayoutInflater.from(context);
-       View view = inflater.inflate(R.layout.item, viewGroup, false);
-       return new ItemViewHolder(view);
-   }
+    public void onBindViewHolder(@NonNull itemViewHolder holder, int position) {
+        holder.bind(moneyList.get(position));
+    }
 
-   @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int position){
-        Item item = items.get(position);
-        itemViewHolder.bind(item);
-   }
+    @Override
+    public int getItemCount() {
+        return moneyList.size();
+    }
 
+    static class itemViewHolder extends RecyclerView.ViewHolder{
+
+        private TextView name_c;
+        private TextView price_c;
+
+        public itemViewHolder(@NonNull View itemView) {
+            super(itemView);
+            name_c = itemView.findViewById(R.id.cell_name);
+            price_c = itemView.findViewById(R.id.cell_price);
+        }
+
+        public void bind(Item item){
+            name_c.setText(item.getName());
+            price_c.setText(item.getPrice());
+        }
+    }
 }

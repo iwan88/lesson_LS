@@ -6,7 +6,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class MainActivity extends AppCompatActivity {
+    // My code BEGIN
+
+    private RecyclerView recycler;
+    private itemViewAdaprer adapter = new itemViewAdaprer();
+
+
+    // My code END
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,21 +25,33 @@ public class MainActivity extends AppCompatActivity {
 
         //My code section BEGIN
 
-        RecyclerView recyclerView = findViewById(R.id.recycler);
-
         System.out.println("Hello WORLD!!!"); //Lesson_1
 
-        RecyclerView recyclerView = findViewById(R.id.recycler);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setItems(items);
+        configRecyclerView();
+
+        generateItem();
 
         //My code section END
     }
     //My code BEGIN
-    public class ItemActivity extends AppCompatActivity{
-        ItemsAdapter adapter = new ItemsAdapter;
+
+    public void generateItem() {
+        List<Item> test_item = new ArrayList<>();
+        test_item.add(new Item("Зубная щетка", "66,6 р."));
+        test_item.add(new Item("Зубная нить","25,5 р."));
+
+        adapter.SetData(test_item);
     }
+
+    public void configRecyclerView(){
+        recycler = findViewById(R.id.items_view);
+        recycler.setAdapter(adapter);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+                LinearLayoutManager.VERTICAL,false);
+
+        recycler.setLayoutManager(layoutManager);
+        }
 
     //My code END
 }
