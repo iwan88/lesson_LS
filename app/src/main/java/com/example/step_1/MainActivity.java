@@ -1,10 +1,18 @@
 package com.example.step_1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +20,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     // My code BEGIN
-
-    private RecyclerView recycler;
-    private itemViewAdaprer adapter = new itemViewAdaprer();
-
-
     // My code END
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,33 +28,37 @@ public class MainActivity extends AppCompatActivity {
 
         //My code section BEGIN
 
-        System.out.println("Hello WORLD!!!"); //Lesson_1
 
-        configRecyclerView();
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.expences));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.income));
 
-        generateItem();
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        viewPager.setAdapter(new BudgetPagerAdapter(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
 
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.getTabAt(0).setText(R.string.expences);
+        tabLayout.getTabAt(1).setText(R.string.income);
         //My code section END
     }
     //My code BEGIN
+    static class BudgetPagerAdapter extends FragmentPagerAdapter{
 
-    public void generateItem() {
-        List<Item> test_item = new ArrayList<>();
-        test_item.add(new Item("Зубная щетка", "66,6 р."));
-        test_item.add(new Item("Зубная нить","25,5 р."));
-
-        adapter.SetData(test_item);
-    }
-
-    public void configRecyclerView(){
-        recycler = findViewById(R.id.items_view);
-        recycler.setAdapter(adapter);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
-                LinearLayoutManager.VERTICAL,false);
-
-        recycler.setLayoutManager(layoutManager);
+        public BudgetPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
         }
 
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return new BudgetFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    }
     //My code END
-}
+    }
