@@ -1,10 +1,12 @@
 package com.example.step_1;
 
+import com.example.step_1.remote.MoneyRemoteItem;
+
 public class Item {
     private String name;
-    private String price;
+    private double price;
 
-    public Item(String name, String price){
+    public Item(String name, double price){
         this.name = name;
         this.price = price;
     }
@@ -13,15 +15,19 @@ public class Item {
         return name;
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
+    //public void setName(String name){
+    //    this.name = name;
+    //}
 
-    public String getPrice(){
+    public double getPrice(){
         return price;
     }
 
-    public void setPrice(String price){
-        this.price=price;
+    //public void setPrice(double price){
+    //    this.price=price;
+    //}
+
+    public static Item getInstance(MoneyRemoteItem moneyRemoteItem){
+        return new Item(moneyRemoteItem.getName(),moneyRemoteItem.getPrice());
     }
 }

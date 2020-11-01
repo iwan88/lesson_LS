@@ -5,4 +5,5 @@
     <string name="Button_name_post">Добавить</string>
     <string name="expences">Расходы</string>
     <string name="income">Доходы</string>
+    <string name="connect_error">Не удалось получить данные</string>
 </resources>

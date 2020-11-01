@@ -54,7 +54,7 @@ class itemViewAdaprer extends RecyclerView.Adapter<itemViewAdaprer.itemViewHolde
 
         public void bind(Item item){
             name_c.setText(item.getName());
-            price_c.setText(item.getPrice());
+            price_c.setText(new String(String.valueOf(item.getPrice())));
         }
     }
 }
