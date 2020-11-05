@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">LoftMoney</string>
+    <string name="add_money">Add</string>
+    <string name="success_added">Data added</string>
+    <string name="fill_fields">Fill in the fields</string>
+    <string name="balance_finance_title">Available finance</string>
+    <string name="cost">Consumption</string>
+    <string name="income">Income</string>
+    <string name="action_login">Login</string>
+    <string name="edittext_name_hint">Name</string>
+    <string name="edittext_price_hint">Cost</string>
+    <string name="activity_main_toolbar_title">Budget accounting</string>
+    <string name="price_with_currency">Price with currency</string>
+    <string name="error">Error</string>
+    <string name="enter">Войти</string>
+</resources>

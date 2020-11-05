@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">LoftMoney</string>
+    <string name="add_money">Добавить</string>
+    <string name="success_added">Данные добавлены</string>
+    <string name="fill_fields">Заполните поля</string>
+    <string name="balance_finance_title">Доступные финансы</string>
+    <string name="cost">Расход</string>
+    <string name="income">Доход</string>
+    <string name="edittext_name_hint">Наименование</string>
+    <string name="activity_main_toolbar_title">Учет бюджета</string>
+    <string name="action_login">Войти</string>
+    <string name="edittext_price_hint">Стоимость</string>
+    <string name="price_with_currency">Цена с валютой</string>
+    <string name="error">Error</string>
+    <string name="enter">Войти</string>
+</resources>
