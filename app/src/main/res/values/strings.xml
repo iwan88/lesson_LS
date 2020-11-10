@@ -12,5 +12,10 @@
     <string name="activity_main_toolbar_title">Budget accounting</string>
     <string name="price_with_currency">Price with currency</string>
     <string name="error">Error</string>
-    <string name="enter">Войти</string>
+    <string name="enter">Enter</string>
+    <string name="selected">"Selected: "</string>
+    <string name="remove">Delete</string>
+    <string name="confirmation">Confirm</string>
+    <string name="balance">Balance</string>
+    <string name="finances">Доступно</string>
 </resources>

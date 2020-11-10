@@ -9,4 +9,7 @@
     <color name="dividerColor">#F2F2F2</color>
     <color name="orange">#FFC107</color>
     <color name="white_six">@android:color/white</color>
+    <color name="white_two">@android:color/white</color>
+    <color name="dark_gray_blue">#333f59</color>
+    <color name="white_five">#f2f2f2</color>
 </resources>

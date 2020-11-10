@@ -13,4 +13,9 @@
     <string name="price_with_currency">Цена с валютой</string>
     <string name="error">Error</string>
     <string name="enter">Войти</string>
+    <string name="selected">"Выбрано: "</string>
+    <string name="remove">Удалить</string>
+    <string name="confirmation">Подтвердить</string>
+    <string name="balance">Баланс</string>
+    <string name="finances">Доступно</string>
 </resources>

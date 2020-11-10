@@ -2,6 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/item_drawable"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -22,7 +23,7 @@
             android:textSize="20sp"
             android:fontFamily="sans-serif"
             android:textColor="@color/textColorPrimary"
-            tools:text="Молокоооооооооооооооооооо"/>
+            tools:text="Молокооооооооооооооооооооо"/>
 
         <TextView
             android:id="@+id/price_view"
@@ -33,7 +34,7 @@
             android:textSize="20sp"
             android:fontFamily="sans-serif"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/incomeColor"
             tools:text="70 ₽"/>
 
     </RelativeLayout>

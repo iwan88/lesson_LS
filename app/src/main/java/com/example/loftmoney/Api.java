@@ -2,7 +2,6 @@ package com.example.loftmoney;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -22,4 +21,7 @@ public interface Api {
 
     @POST("items/remove")
     Call<Status> removeItem(@Query("id") String id, @Query("auth-token") String token);
+
+    @GET("balance")
+    Call<BalanceResponce> getBalance(@Query("auth-token") String token);
 }

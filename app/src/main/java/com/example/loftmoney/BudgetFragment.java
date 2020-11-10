@@ -1,33 +1,40 @@
 package com.example.loftmoney;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BudgetFragment extends Fragment {
+public class BudgetFragment extends Fragment implements ItemsAdapterListener, ActionMode.Callback {
 
     public static final int REQUEST_CODE = 100;
-    private static final String COLOR_ID = "colorId";
+    private static final String COLOR_ID = "#666664";
     private static final String TYPE = "fragmentType";
 
     private ItemsAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ActionMode mActionMode;
 
     private Api mApi;
 
@@ -67,9 +74,8 @@ public class BudgetFragment extends Fragment {
         });
 
         mAdapter = new ItemsAdapter(getArguments().getInt(COLOR_ID));
+        mAdapter.setListener(this);
         recyclerView.setAdapter(mAdapter);
-
-
 
         return view;
     }
@@ -80,17 +86,17 @@ public class BudgetFragment extends Fragment {
     ) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        int price;
-        try {
-            price = Integer.parseInt(data.getStringExtra("price"));
-        } catch (NumberFormatException e) {
-            price = 0;
-        }
-        final int realPrice = price;
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            int price;
+            try {
+                price = Integer.parseInt(data.getStringExtra("price"));
+            } catch (NumberFormatException e) {
+                price = 0;
+            }
+            final int realPrice = price;
             final String name = data.getStringExtra("name");
 
-            final String token = PreferenceManager.getDefaultSharedPreferences(getContext()).getString(MainActivity.TOKEN, "");
+            final String token = PreferenceManager.getDefaultSharedPreferences(getContext()).getString(MainActivity.TOKEN, "biju");
 
             Call<Status> call = mApi.addItem(new AddItemRequest(name, getArguments().getString(TYPE), price), token);
             call.enqueue(new Callback<Status>() {
@@ -100,7 +106,7 @@ public class BudgetFragment extends Fragment {
                         final Call<Status> call, final Response<Status> response
                 ) {
                     if (response.body().getStatus().equals("success")) {
-                        mAdapter.addItem(new Item(name, realPrice));
+                        loadItems();
                     }
                 }
 
@@ -113,8 +119,10 @@ public class BudgetFragment extends Fragment {
         }
     }
 
+
+
     public void loadItems() {
-        final String token = PreferenceManager.getDefaultSharedPreferences(getContext()).getString(MainActivity.TOKEN, "");
+        final String token = PreferenceManager.getDefaultSharedPreferences(getContext()).getString(MainActivity.TOKEN, "biju");
 
         Call<List<Item>> items = mApi.getItems(getArguments().getString(TYPE), token);
         items.enqueue(new Callback<List<Item>>() {
@@ -137,5 +145,90 @@ public class BudgetFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onItemClick(final Item item, final int position) {
+        mAdapter.clearItem(position);
+        if (mActionMode != null) {
+            mActionMode.setTitle(getString(R.string.selected) + String.valueOf(mAdapter.getSelectedSize()));
+        }
+    }
+
+    @Override
+    public void onItemLongClick(final Item item, final int position) {
+        if (mActionMode == null) {
+            getActivity().startActionMode(this);
+        }
+        mAdapter.toggleItem(position);
+        if (mActionMode != null) {
+            mActionMode.setTitle(getString(R.string.selected) + String.valueOf(mAdapter.getSelectedSize()));
+        }
+    }
+
+    @Override
+    public boolean onCreateActionMode(final ActionMode actionMode, final Menu menu) {
+        mActionMode = actionMode;
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(final ActionMode actionMode, final Menu menu) {
+        MenuInflater menuInflater = new MenuInflater(getActivity());
+        menuInflater.inflate(R.menu.menu_delete, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onActionItemClicked(final ActionMode actionMode, final MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.remove) {
+            new AlertDialog.Builder(getContext())
+                    .setMessage(R.string.confirmation)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(final DialogInterface dialogInterface, final int i) {
+                            removeItems();
+                            //actionMode.setTitle(getString(R.string.activity_main_toolbar_title));
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(final DialogInterface dialogInterface, final int i) {
+
+                        }
+                    }).show();
+        }
+        return true;
+    }
+
+    private void removeItems() {
+        String token = PreferenceManager.getDefaultSharedPreferences(getContext()).getString(MainActivity.TOKEN, "");
+        List<Integer> selectedItems = mAdapter.getSelectedItemIds();
+        for (Integer itemId : selectedItems) {
+            Call<Status> call = mApi.removeItem(String.valueOf(itemId.intValue()), token);
+            call.enqueue(new Callback<Status>() {
+
+                @Override
+                public void onResponse(
+                        final Call<Status> call, final Response<Status> response
+                ) {
+                    loadItems();
+                    mAdapter.clearSelections();
+                }
+
+                @Override
+                public void onFailure(final Call<Status> call, final Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onDestroyActionMode(final ActionMode actionMode) {
+        mActionMode = null;
+        mAdapter.clearSelections();
     }
 }

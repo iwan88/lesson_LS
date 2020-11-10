@@ -1,6 +1,4 @@
 package com.example.loftmoney;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -16,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
-    private List<Item> mItemsList = new ArrayList<>();
+    private List<Item> mItemsList = new ArrayList<Item>();
     private final int colorId;
     private ItemsAdapterListener mListener;
 
@@ -116,7 +114,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         public void bindItem(final Item item, final boolean isSelected) {
             mItemView.setSelected(isSelected);
             mNameView.setText(item.getName());
-            mPriceView.setText(String.valueOf(item.getPrice())+" ₽");
+            mPriceView.setText(item.getPrice()+" ₽");
         }
 
         public void setListener(final ItemsAdapterListener listener, final Item item, final int position) {
