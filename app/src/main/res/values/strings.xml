@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">LoftMoney</string>
     <string name="add_money">Add</string>
     <string name="success_added">Data added</string>
     <string name="fill_fields">Fill in the fields</string>

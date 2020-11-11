@@ -6,6 +6,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
     defaultConfig {
         applicationId "com.example.loftmoney"
         minSdkVersion 21
@@ -16,12 +20,45 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs{
+        release{
+            storeFile file("release.keystore")
+            storePassword '123456789'
+            keyAlias 'iwan88'
+            keyPassword '123456789'
+        }
+    }
+
     buildTypes {
+
+        debug {
+            buildConfigField("String", "URL", "\"https://loftschool.com/android-api/basic/v1/\"")
+            resValue("string", "app_name", "loftmoney-debug")
+        }
+
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            buildConfigField("String", "URL", "\"https://loftschool.com/android-api/basic/v1/\"")
+            resValue("string", "app_name", "LoftMoney")
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions 'target'
+
+    productFlavors {
+        mobile {
+            resValue("String", "app_name", "loftmoney-mobile")
+            applicationId "ru.loftmoney.test"
+        }
+
+        beta {
+            //resValue("String", "app_name", "loftmoney-beta")
+            applicationIdSuffix ".beta"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
